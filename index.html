@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天吃啥呢？🍚</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', '华康圆体', cursive;
+            background: linear-gradient(135deg, #FFB6C1, #FFDAB9);
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #FF69B4;
+            font-size: 2.5em;
+            text-shadow: 2px 2px #FFF;
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .meal-btn {
+            background: #FF69B4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .meal-btn:hover {
+            transform: scale(1.05);
+            background: #FF1493;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-size: 2em;
+            color: #8B4513;
+            background: rgba(255,255,255,0.8);
+            padding: 20px;
+            border-radius: 20px;
+            display: none;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .food-emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .decoration {
+            position: fixed;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>今天吃什么呢？🍴</h1>
+        
+        <div class="btn-group">
+            <button class="meal-btn" onclick="decideMeal('lunch')">午饭吃什么？🍚</button>
+            <button class="meal-btn" onclick="decideMeal('dinner')">晚饭吃什么？🍜</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const foodOptions = {
+            lunch: [
+                { name: "麻辣烫", emoji: "🍲" },
+                { name: "牛肉面", emoji: "🍜" },
+                { name: "沙拉轻食", emoji: "🥗" },
+                { name: "日式定食", emoji: "🍱" },
+                { name: "汉堡套餐", emoji: "🍔" }
+            ],
+            dinner: [
+                { name: "火锅", emoji: "🥘" },
+                { name: "烧烤", emoji: "🍖" },
+                { name: "家常菜", emoji: "🍛" },
+                { name: "披萨", emoji: "🍕" },
+                { name: "寿司", emoji: "🍣" }
+            ]
+        };
+
+        function decideMeal(mealType) {
+            const options = foodOptions[mealType];
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const selected = options[randomIndex];
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <span class="food-emoji">${selected.emoji}</span>
+                今天吃：${selected.name}！
+                <span class="food-emoji">${selected.emoji}</span>
+            `;
+            
+            resultDiv.style.display = 'block';
+            resultDiv.style.animation = 'none';
+            resultDiv.offsetHeight; // 触发重绘
+            resultDiv.style.animation = 'fadeIn 1s';
+        }
+    </script>
+</body>
+</html>
