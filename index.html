@@ -3,127 +3,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>今天吃啥呢？🍚</title>
+    <title>专属美食决策助手 - 为女友定制</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
         body {
-            font-family: 'Comic Sans MS', '华康圆体', cursive;
-            background: linear-gradient(135deg, #FFB6C1, #FFDAB9);
+            background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), 
+                        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+            background-size: cover;
             min-height: 100vh;
             padding: 20px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            color: #FF69B4;
-            font-size: 2.5em;
-            text-shadow: 2px 2px #FFF;
-            margin-bottom: 30px;
-        }
-
-        .btn-group {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            transition: background-image 1s ease;
+        }
+
+
+        //功能区
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            border-radius: 20px;
+            padding: 30px;
+            background: none !important;
+            box-shadow: none !important;
+	    backdrop-filter: none !important;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 25px;
+            //background: rgba(255, 255, 255, 0.65);
+            //box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            //毛玻璃：backdrop-filter: blur(5px);
+        }
+        
+        header {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .hearts {
+            position: absolute;
+            top: -30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
             gap: 15px;
+        }
+        
+        .heart {
+            font-size: 24px;
+            color: #ff6b6b;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .heart:nth-child(1) { animation-delay: 0s; }
+        .heart:nth-child(2) { animation-delay: 0.5s; }
+        .heart:nth-child(3) { animation-delay: 1s; }
+        .heart:nth-child(4) { animation-delay: 1.5s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: #fff !important;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                                     0 1px 2px rgba(0, 0, 0, 0.6);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #718096;
+            margin-bottom: 10px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 
+                                     0 1px 2px rgba(0, 0, 0, 0.6);
+        }
+        
+        .love-note {
+            background: #fff;
+            border-radius: 20px;
+            padding: 15px 25px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+            border: 1px solid #e2e8f0;
+            max-width: 600px;
+            position: relative;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 
+                                     0 1px 2px rgba(0, 0, 0, 0.6);
+        }
+        
+        .love-note::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 10px solid transparent;
+            border-bottom-color: #fff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 
+                                     0 1px 2px rgba(0, 0, 0, 0.6);
+        }
+        
+        .meal-cards {
+            display: flex;
             justify-content: center;
             flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
         }
+        
+        .card {
+            //background: white;
+            /* 移除背景色 */
+            background: transparent !important;
 
-        .meal-btn {
-            background: #FF69B4;
+            /* 添加边框 */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+
+           /* 调整文字颜色 */
+            color: white;
+
+            border-radius: 20px;
+            padding: 30px;
+            width: 320px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .breakfast::before { background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%); }
+        .lunch::before { background: linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%); }
+        .dinner::before { background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%); }
+        
+        .card i {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+        
+        .breakfast i { color: #ff6b6b; }
+        .lunch i { color: #4dabf7; }
+        .dinner i { color: #ff922b; }
+        
+        .card h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                                     0 1px 2px rgba(0, 0, 0, 0.6);
+        }
+        
+        .card p {
+            color:pink;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                                     0 1px 2px rgba(0, 0, 0, 0.6);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.2em;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
+            font-weight: 600;
         }
-
-        .meal-btn:hover {
-            transform: scale(1.05);
-            background: #FF1493;
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.4);
         }
+        
+        .result-container {
+        /* 移除背景色 */
+            background: transparent !important;
+  
+        /* 添加边框 */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+  
+          /* 调整文字颜色 */
+            color: white;
+}
 
-        #result {
-            margin-top: 30px;
-            font-size: 2em;
-            color: #8B4513;
-            background: rgba(255,255,255,0.8);
+        .result-title, .result {
+            color: white !important;
+        }
+        
+        
+        .result {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #5a67d8;
+            margin: 20px 0;
+            min-height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .result-animation {
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .reset-btn {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            margin-top: 20px;
+        }
+        
+        .custom-bg-section {
+            /* 移除背景色 */
+            background: transparent !important;
+  
+            /* 添加边框 */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+  
+            /* 调整文字颜色 */
+            color: white;
+}
+
+         .custom-bg-section h3 {
+            color: white !important;
+}
+        
+        .bg-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .bg-btn {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+            color: white;
+        }
+        
+        .bg-btn:hover {
+            background: #cbd5e0;
+        }
+        
+        .bg-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .bg-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bg-upload input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            border-radius: 10px;
             padding: 20px;
-            border-radius: 20px;
-            display: none;
-            animation: fadeIn 1s;
+            margin-top: 20px;
+            text-align: left;
+            border-left: 4px solid #667eea;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        
+        .instructions h4 {
+            color: #5a67d8;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-
-        .food-emoji {
-            font-size: 1.5em;
-            margin-right: 10px;
+        
+        .instructions ul {
+            padding-left: 20px;
         }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        footer {
+            color: rgba(255, 255, 255, 0.8);
 
-        .decoration {
-            position: fixed;
-            opacity: 0.2;
-            pointer-events: none;
+
+            //border-top: 1px solid #e2e8f0;
+            /* 移除上边框 */
+            border-top: none;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .meal-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card {
+                width: 90%;
+                max-width: 400px;
+            }
+            
+            .custom-bg-section {
+                padding: 15px;
+            }
+            
+            .bg-controls {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>今天吃什么呢？🍴</h1>
+        <header>
+            <div class="hearts">
+                <div class="heart"><i class="fas fa-heart"></i></div>
+                <div class="heart"><i class="fas fa-heart"></i></div>
+                <div class="heart"><i class="fas fa-heart"></i></div>
+                <div class="heart"><i class="fas fa-heart"></i></div>
+            </div>
+            <h1>今天吃什么？</h1>
+            <div class="subtitle">专属美食决策助手 - 为女友特别定制</div>
+            
+            <div class="love-note">
+                <i class="fas fa-quote-left"></i> 
+                亲爱的，让这个专属工具帮我们决定今天的美味吧！
+                <i class="fas fa-quote-right"></i>
+            </div>
+        </header>
         
-        <div class="btn-group">
-            <button class="meal-btn" onclick="decideMeal('lunch')">午饭吃什么？🍚</button>
-            <button class="meal-btn" onclick="decideMeal('dinner')">晚饭吃什么？🍜</button>
+        <div class="meal-cards">
+            <div class="card breakfast">
+                <i class="fas fa-sun"></i>
+                <h2>早餐</h2>
+                <p>开启美好一天的第一餐，营养又美味！</p>
+                <button class="btn breakfast-btn">帮我选早餐</button>
+            </div>
+            
+            <div class="card lunch">
+                <i class="fas fa-cloud-sun"></i>
+                <h2>午餐</h2>
+                <p>补充能量的午间美味，满足你的味蕾！</p>
+                <button class="btn lunch-btn">帮我选午餐</button>
+            </div>
+            
+            <div class="card dinner">
+                <i class="fas fa-moon"></i>
+                <h2>晚餐</h2>
+                <p>享受温馨浪漫的晚餐时光！</p>
+                <button class="btn dinner-btn">帮我选晚餐</button>
+            </div>
         </div>
-
-        <div id="result"></div>
+        
+        <div class="result-container" id="resultContainer">
+            <div class="result-title">今日推荐：</div>
+            <div class="result" id="result"></div>
+            <button class="btn reset-btn" id="resetBtn">再选一次</button>
+        </div>
+        
+        <div class="custom-bg-section">
+            <h3><i class="fas fa-cog"></i> 自定义背景设置</h3>
+            <div class="bg-controls">
+                <button class="bg-btn active" data-bg="food"><i class="fas fa-utensils"></i> 美食背景</button>
+                <button class="bg-btn" data-bg="nature"><i class="fas fa-tree"></i> 自然风景</button>
+                <button class="bg-btn" data-bg="city"><i class="fas fa-city"></i> 城市夜景</button>
+                <button class="bg-btn" data-bg="love"><i class="fas fa-heart"></i> 浪漫回忆</button>
+            </div>
+            <div class="bg-upload">
+                <p>使用自己的照片：</p>
+                <input type="text" id="bgUrlInput" placeholder="粘贴图片网址...">
+                <button class="btn" id="applyBgBtn"><i class="fas fa-check"></i> 应用背景</button>
+            </div>
+            
+                    
+        <footer>
+            <p>专属定制 | 用心制作每一餐 | 爱就是一起吃饭</p>
+        </footer>
     </div>
 
     <script>
+        // 食物数据库
         const foodOptions = {
+            breakfast: [
+                "豆浆油条", "牛奶麦片", "煎饼果子", "三明治", "包子小米粥", 
+                "肠粉", "小笼包", "鸡蛋灌饼", "云吞面", "法式吐司",
+                "港式菠萝包", "豆腐脑", "煎饺", "糯米鸡", "烧麦"
+            ],
             lunch: [
-                { name: "麻辣烫", emoji: "🍲" },
-                { name: "牛肉面", emoji: "🍜" },
-                { name: "沙拉轻食", emoji: "🥗" },
-                { name: "日式定食", emoji: "🍱" },
-                { name: "汉堡套餐", emoji: "🍔" }
+                "重庆小面", "扬州炒饭", "牛肉拉面", "黄焖鸡米饭", "饺子", 
+                "麻辣香锅", "番茄鸡蛋面", "咖喱饭", "煲仔饭", "酸菜鱼",
+                "日式拉面", "韩式拌饭", "海南鸡饭", "意面", "披萨"
             ],
             dinner: [
-                { name: "火锅", emoji: "🥘" },
-                { name: "烧烤", emoji: "🍖" },
-                { name: "家常菜", emoji: "🍛" },
-                { name: "披萨", emoji: "🍕" },
-                { name: "寿司", emoji: "🍣" }
+                "火锅", "烧烤", "寿司", "牛排", "麻辣烫", 
+                "烤鱼", "小龙虾", "家常小炒", "粤式点心", "烤肉",
+                "椰子鸡", "泰国菜", "烤鸭", "海鲜大餐", "私房菜"
             ]
         };
+        
 
-        function decideMeal(mealType) {
-            const options = foodOptions[mealType];
-            const randomIndex = Math.floor(Math.random() * options.length);
-            const selected = options[randomIndex];
-            
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <span class="food-emoji">${selected.emoji}</span>
-                今天吃：${selected.name}！
-                <span class="food-emoji">${selected.emoji}</span>
-            `;
-            
-            resultDiv.style.display = 'block';
-            resultDiv.style.animation = 'none';
-            resultDiv.offsetHeight; // 触发重绘
-            resultDiv.style.animation = 'fadeIn 1s';
+
+
+
+
+
+
+        // 背景图片库 - 替换这里的URL为您自己的图片
+        const backgroundImages = {
+            food: [
+                "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80",
+                "https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1932&q=80",
+                "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
+            ],
+            nature: [
+                "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1948&q=80",
+                "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1925&q=80",
+                "https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
+            ],
+            city: [
+                "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1934&q=80",
+                "https://images.unsplash.com/photo-1444723121867-7a241cacace9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80",
+                "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
+            ],
+            love: [
+                "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80",
+                "https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1953&q=80",
+                "https://images.unsplash.com/photo-1506634572416-48cdfe530110?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
+            ]
+        };
+        
+        // 获取DOM元素
+        const breakfastBtn = document.querySelector('.breakfast-btn');
+        const lunchBtn = document.querySelector('.lunch-btn');
+        const dinnerBtn = document.querySelector('.dinner-btn');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultElement = document.getElementById('result');
+        const resultContainer = document.getElementById('resultContainer');
+        const bgBtns = document.querySelectorAll('.bg-btn');
+        const bgUrlInput = document.getElementById('bgUrlInput');
+        const applyBgBtn = document.getElementById('applyBgBtn');
+        
+        // 随机选择食物函数
+        function getRandomFood(mealType) {
+            const foods = foodOptions[mealType];
+            const randomIndex = Math.floor(Math.random() * foods.length);
+            return foods[randomIndex];
         }
+        
+        // 显示结果函数
+        function showResult(mealType) {
+            // 隐藏结果容器并重置动画
+            resultContainer.style.display = 'none';
+            
+            // 设置加载状态
+            resultElement.textContent = "选择中...";
+            resultElement.classList.remove('result-animation');
+            resultContainer.style.display = 'block';
+            
+            // 模拟选择过程
+            setTimeout(() => {
+                const food = getRandomFood(mealType);
+                resultElement.textContent = food;
+                
+                // 添加动画效果
+                setTimeout(() => {
+                    resultElement.classList.add('result-animation');
+                }, 50);
+            }, 800);
+        }
+        
+        // 更改背景函数
+        function changeBackground(type) {
+            const images = backgroundImages[type];
+            if (images.length === 0) {
+                alert("这个分类还没有添加图片，请先添加图片！");
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * images.length);
+            document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${images[randomIndex]}')`;
+        }
+        
+        // 应用自定义背景
+        function applyCustomBackground() {
+            const url = bgUrlInput.value.trim();
+            if (url) {
+                document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${url}')`;
+                
+                // 更新按钮状态
+                bgBtns.forEach(btn => btn.classList.remove('active'));
+                bgUrlInput.value = "";
+            } else {
+                alert("请输入有效的图片网址");
+            }
+        }
+        
+        // 事件监听
+        breakfastBtn.addEventListener('click', () => {
+            showResult('breakfast');
+        });
+        
+        lunchBtn.addEventListener('click', () => {
+            showResult('lunch');
+        });
+        
+        dinnerBtn.addEventListener('click', () => {
+            showResult('dinner');
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            resultContainer.style.display = 'none';
+        });
+        
+        // 背景按钮事件
+        bgBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 更新活动按钮
+                bgBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 更改背景
+                changeBackground(btn.dataset.bg);
+            });
+        });
+        
+        applyBgBtn.addEventListener('click', applyCustomBackground);
+        
+        // 按Enter键应用自定义背景
+        bgUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                applyCustomBackground();
+            }
+        });
+        
+        // 初始页面加载效果
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.querySelector('.container').style.opacity = 1;
+            }, 100);
+        });
     </script>
 </body>
 </html>
