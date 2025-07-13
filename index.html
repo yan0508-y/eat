@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>专属美食决策助手 - 为女友定制</title>
+    <title>专属美食决策助手 - 为了晶晶好好吃饭！</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -41,9 +41,6 @@
             border: 2px solid rgba(255, 255, 255, 0.7);
             border-radius: 20px;
             padding: 25px;
-            //background: rgba(255, 255, 255, 0.65);
-            //box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            //毛玻璃：backdrop-filter: blur(5px);
         }
         
         header {
@@ -127,7 +124,6 @@
         }
         
         .card {
-            //background: white;
             /* 移除背景色 */
             background: transparent !important;
 
@@ -332,12 +328,80 @@
         
         footer {
             color: rgba(255, 255, 255, 0.8);
-
-
-            //border-top: 1px solid #e2e8f0;
             /* 移除上边框 */
             border-top: none;
         }
+        
+        /* ===== 手机上传功能添加 ===== */
+        .upload-local {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+        }
+        
+        .upload-instructions {
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .file-input-button {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .file-input-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .preview-container {
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+        }
+        
+        .preview-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        /* ===== 手机上传功能结束 ===== */
         
         /* 响应式设计 */
         @media (max-width: 768px) {
@@ -367,6 +431,12 @@
                 flex-direction: column;
                 align-items: center;
             }
+            
+            /* 手机上传响应式调整 */
+            .file-input-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -379,12 +449,12 @@
                 <div class="heart"><i class="fas fa-heart"></i></div>
                 <div class="heart"><i class="fas fa-heart"></i></div>
             </div>
-            <h1>今天吃什么？</h1>
-            <div class="subtitle">专属美食决策助手 - 为女友特别定制</div>
+            <h1>今天你按时吃饭了么？</h1>
+            <div class="subtitle">专属美食决策助手 - 为了晶晶好好吃饭</div>
             
             <div class="love-note">
                 <i class="fas fa-quote-left"></i> 
-                亲爱的，让这个专属工具帮我们决定今天的美味吧！
+               宝贝儿，吃饭！
                 <i class="fas fa-quote-right"></i>
             </div>
         </header>
@@ -427,11 +497,32 @@
                 <button class="bg-btn" data-bg="love"><i class="fas fa-heart"></i> 浪漫回忆</button>
             </div>
             <div class="bg-upload">
-                <p>使用自己的照片：</p>
+                <p>使用网络图片：</p>
                 <input type="text" id="bgUrlInput" placeholder="粘贴图片网址...">
                 <button class="btn" id="applyBgBtn"><i class="fas fa-check"></i> 应用背景</button>
             </div>
             
+            <!-- ===== 手机上传功能添加 ===== -->
+            <div class="upload-local">
+                <h4><i class="fas fa-mobile-alt"></i> 上传手机图片</h4>
+                <p class="upload-instructions">直接上传手机照片作为背景：</p>
+                
+                <div class="file-input-wrapper">
+                    <div class="file-input-button">
+                        <i class="fas fa-upload"></i> 选择手机图片
+                    </div>
+                    <input type="file" id="bgFileInput" accept="image/*">
+                </div>
+                
+                <div class="preview-container" id="previewContainer">
+                    <div class="preview-title">预览：</div>
+                    <img id="previewImage" class="preview-image" src="" alt="背景预览">
+                    <button class="btn" id="applyUploadBtn">
+                        <i class="fas fa-image"></i> 应用为背景
+                    </button>
+                </div>
+            </div>
+            <!-- ===== 手机上传功能结束 ===== -->
                     
         <footer>
             <p>专属定制 | 用心制作每一餐 | 爱就是一起吃饭</p>
@@ -448,22 +539,15 @@
             ],
             lunch: [
                 "重庆小面", "扬州炒饭", "牛肉拉面", "黄焖鸡米饭", "饺子", 
-                "麻辣香锅", "番茄鸡蛋面", "咖喱饭", "煲仔饭", "酸菜鱼",
-                "日式拉面", "韩式拌饭", "海南鸡饭", "意面", "披萨"
+                "麻辣香锅", "番茄鸡蛋面", "咖喱饭", "煲仔饭", "饿着",
+                "日式拉面", "韩式拌饭", "海南鸡饭", "螺蛳粉", "披萨"
             ],
             dinner: [
-                "火锅", "烧烤", "寿司", "牛排", "麻辣烫", 
-                "烤鱼", "小龙虾", "家常小炒", "粤式点心", "烤肉",
-                "椰子鸡", "泰国菜", "烤鸭", "海鲜大餐", "私房菜"
+                "火锅", "烧烤", "冒菜", "麻辣烫", "麻辣烫", 
+                "烤鱼", "小龙虾", "家常小炒", "我吃啥你吃啥", "烤肉",
+                "米线儿", "冒菜", "烤鸭", "饿着", "炸鸡"
             ]
         };
-        
-
-
-
-
-
-
 
         // 背景图片库 - 替换这里的URL为您自己的图片
         const backgroundImages = {
@@ -499,6 +583,69 @@
         const bgBtns = document.querySelectorAll('.bg-btn');
         const bgUrlInput = document.getElementById('bgUrlInput');
         const applyBgBtn = document.getElementById('applyBgBtn');
+        
+        // ===== 手机上传功能添加 =====
+        const bgFileInput = document.getElementById('bgFileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const applyUploadBtn = document.getElementById('applyUploadBtn');
+        
+        // 处理手机图片上传
+        bgFileInput.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                
+                // 检查文件类型
+                if (!file.type.match('image.*')) {
+                    alert('请选择图片文件（JPG/PNG格式）');
+                    return;
+                }
+                
+                // 检查文件大小（限制5MB）
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('图片太大，请选择小于5MB的图片');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // 显示预览
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                    
+                    // 自动滚动到预览区域
+                    previewContainer.scrollIntoView({ behavior: 'smooth' });
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // 应用上传的图片作为背景
+        applyUploadBtn.addEventListener('click', function() {
+            if (previewImage.src) {
+                document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${previewImage.src}')`;
+                
+                // 更新UI状态
+                document.querySelectorAll('.bg-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // 显示成功消息
+                const resultElement = document.getElementById('result');
+                resultElement.textContent = "背景设置成功！";
+                resultElement.style.color = "#4CAF50";
+                resultElement.classList.add('result-animation');
+                
+                // 3秒后恢复原状
+                setTimeout(() => {
+                    resultElement.textContent = "";
+                    resultElement.style.color = "";
+                }, 3000);
+            }
+        });
+        // ===== 手机上传功能结束 =====
         
         // 随机选择食物函数
         function getRandomFood(mealType) {
